@@ -31,23 +31,23 @@ class _RightsideDataState extends State<RightsideData> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ValueListenableBuilder<ChargingStation?>(
-        valueListenable: selectedStation,
-        builder: (context, selectedStation, _) {
-          if (selectedStation != null) {
-            _costController.text = selectedStation.cost.toString();
-            _slotsController.text = selectedStation.slots.toString();
-            _distanceController.text = selectedStation.distance.toString();
-          }
-          return selectedStation != null
-              ? Expanded(
+    return ValueListenableBuilder<ChargingStation?>(
+      valueListenable: selectedStation,
+      builder: (context, selectedStation, _) {
+        if (selectedStation != null) {
+          _costController.text = selectedStation.cost.toString();
+          _slotsController.text = selectedStation.slots.toString();
+          _distanceController.text = selectedStation.distance.toString();
+        }
+        return selectedStation != null
+            ? Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Charging Station ${selectedStation.value?.name ?? 'Data'}', // Use selected charging station's name
+                        'Charging Station ${selectedStation.value?.name ?? 'Data'}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24.0,
@@ -134,10 +134,10 @@ class _RightsideDataState extends State<RightsideData> {
                       ),
                     ],
                   ),
-                )
-              : Container(); // Empty container when no station is selected
-        },
-      ),
+                ),
+              )
+            : Container(); // Empty container when no station is selected
+      },
     );
   }
 }

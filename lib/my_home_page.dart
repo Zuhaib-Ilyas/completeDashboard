@@ -102,33 +102,69 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ChargingStationMenu(),
-              SizedBox(
-                  height: 16.0), // Add space between the menu and the GridView
+              SizedBox(height: 16.0),
             ],
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // 4 boxes in each row
-                  crossAxisSpacing: 0.1, // Horizontal spacing between boxes
-                  mainAxisSpacing: 0.1, // Vertical spacing between boxes
-                  childAspectRatio: 2, // Adjust aspect ratio for smaller boxes
-                ),
-                itemCount: chargingStations.length,
-                itemBuilder: (context, index) {
-                  return ChargingStationCard(chargingStations[index]);
-                },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Charging Stations in Karachi',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        filled: true,
+                        fillColor: Color(0xFF21222D),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        // Implement search functionality here
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 0.1,
+                        mainAxisSpacing: 0.1,
+                        childAspectRatio: 2,
+                      ),
+                      itemCount: chargingStations.length,
+                      itemBuilder: (context, index) {
+                        final chargingStation = chargingStations[index];
+                        return ChargingStationCard(chargingStation);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
           Container(
-            width: 450.0, // Adjust the width as needed
-            color:
-                Color(0xFF21222D), // Example color, change as per your design
-            child:
-                RightsideData(), // Replace YourRightWidget() with your actual widget
+            width: 450.0,
+            color: Color(0xFF21222D),
+            child: RightsideData(),
           ),
         ],
       ),
