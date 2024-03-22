@@ -1,9 +1,12 @@
 // my_home_page.dart
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'charging_station_card.dart';
-import 'charging_station.dart';
-import 'charging_station_menu.dart';
+
 import 'package:dashboard/rightsideData.dart';
+
+import 'charging_station.dart';
+import 'charging_station_card.dart';
+import 'charging_station_menu.dart';
 
 // my_home_page.dart
 ValueNotifier<ChargingStation?> selectedStation =
@@ -15,6 +18,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DatabaseReference ref = FirebaseDatabase.instance.ref("charging_stations");
+
   final List<ChargingStation> chargingStations = [
     ChargingStation(
       name: 'Station 1',
@@ -88,6 +93,23 @@ class _MyHomePageState extends State<MyHomePage> {
       distance: 3.0,
     ),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ref.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        Map<dynamic, dynamic> data = snapshot.value as Map<dynamic, dynamic>;
+        if (data == null) {
+          print('No data TRANSFERED ');
+        } else {
+          print(data);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
